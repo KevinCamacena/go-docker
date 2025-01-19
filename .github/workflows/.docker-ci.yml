@@ -59,6 +59,7 @@ jobs:
           provenance: true
           sbom: true
 
+      # Step 7: Move cache
       - name: Move cache 
         if: always()
         run: |

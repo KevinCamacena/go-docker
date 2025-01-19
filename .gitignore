@@ -1,0 +1,54 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Go workspace file
+go.work
+
+# Go modules
+vendor/
+
+# Go build artifacts
+*.a
+*.o
+*.log
+
+# Dependency directories
+vendor/
+Godeps/
+
+# Docker specific files
+docker-compose.override.yml
+docker-compose.override.yml
+docker-compose.debug.yml
+docker-compose.debug.override.yml
+docker-compose.test.yml
+docker-compose.test.override.yml
+
+# Docker storage directories
+docker-data/
+docker-db-data/
+docker-logs/
+
+# Docker secrets
+docker-secrets/
+
+# Docker environment files
+.env
+.env.*
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,8 @@
+services:
+  web:
+    image: kevcam7/go-docker
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/code

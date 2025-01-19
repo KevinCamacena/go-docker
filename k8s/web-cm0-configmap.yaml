@@ -1,0 +1,112 @@
+apiVersion: v1
+data:
+  .dockerignore: |-
+    # Binaries for programs and plugins
+    *.exe
+    *.exe~
+    *.dll
+    *.so
+    *.dylib
+
+    # Output of the go coverage tool, specifically when used with LiteIDE
+    *.out
+
+    # Temporary files
+    *.tmp
+    *.temp
+
+    # Logs
+    *.log
+
+    # Dependency directories
+    vendor/
+
+    # Go workspace file
+    go.work
+
+    # IDE directories
+    .idea/
+    .vscode/
+
+    # OS generated files
+    .DS_Store
+    Thumbs.db
+
+    # Docker files
+    Dockerfile
+    docker-compose.yml
+  .gitignore: |-
+    # Binaries for programs and plugins
+    *.exe
+    *.exe~
+    *.dll
+    *.so
+    *.dylib
+
+    # Output of the go coverage tool, specifically when used with LiteIDE
+    *.out
+
+    # Go workspace file
+    go.work
+
+    # Go modules
+    vendor/
+
+    # Go build artifacts
+    *.a
+    *.o
+    *.log
+
+    # Dependency directories
+    vendor/
+    Godeps/
+
+    # Docker specific files
+    docker-compose.override.yml
+    docker-compose.override.yml
+    docker-compose.debug.yml
+    docker-compose.debug.override.yml
+    docker-compose.test.yml
+    docker-compose.test.override.yml
+
+    # Docker storage directories
+    docker-data/
+    docker-db-data/
+    docker-logs/
+
+    # Docker secrets
+    docker-secrets/
+
+    # Docker environment files
+    .env
+    .env.*
+
+    # IDE specific files
+    .idea/
+    .vscode/
+    *.swp
+    *~
+
+    # OS generated files
+    .DS_Store
+    Thumbs.db
+  Dockerfile: "FROM golang:1.23 AS builder\n\nWORKDIR /app\n\n# Copy the Go modules manifests\nCOPY go.mod go.sum ./\n\n# Download the module dependencies\nRUN  go mod download \n\n# Copy the applicaction source code\nCOPY src/ .\n\n# Build the application soruce code\nRUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o go-api .\n\n# Use a minimal image for the final container\nFROM alpine:latest\n\n# Set the working directory\nWORKDIR /app\n\n# Copy the compiled binary from the builder stage\nCOPY --from=builder /app/go-api .\n\nEXPOSE 8080\n\n# Command to run the application\nCMD [\"./go-api\"]"
+  compose.yml: |
+    services:
+      web:
+        image: kevcam7/go-docker
+        build: .
+        ports:
+          - "8080:8080"
+        volumes:
+          - .:/code
+  go.mod: |
+    module kevcam7/api
+
+    go 1.23.4
+  go.sum: ""
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: web
+  name: web-cm0
